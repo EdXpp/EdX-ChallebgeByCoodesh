@@ -1,0 +1,6 @@
+-- Listar os Funcionarios que não estejam relacionados a um Pedido.
+select s.staff_id, s.first_name, s.last_name
+from staffs
+where s.staff_id not in (select distinct(staff_id from orders))
+order by s.staff_id
+

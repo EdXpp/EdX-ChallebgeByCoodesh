@@ -1,0 +1,5 @@
+--Listar os Produtos que não tenham sido comprados
+select product_id, product_name
+from products
+where product_id not in (select distinct(order_id) from order_items)
+group by product_id

@@ -1,0 +1,7 @@
+-- Listar os Produtos sem Estoque;
+select p.product_id, p.product_name
+from products p
+inner join stocks s
+    in s.product_id = p.product_id
+where s.quantity <= 0
+order by p.product_id

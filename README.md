@@ -54,3 +54,55 @@ Construir as seguintes consultas:
 1. Adicione o link do repositório com a sua solução no teste
 2. Verifique se o Readme está bom e faça o commit final em seu repositório;
 3. Envie e aguarde as instruções para seguir. Sucesso e boa sorte. =)
+
+
+--Listar todos Clientes que não tenham realizado uma compra;
+select customer_id, first_name, last_name
+from customers 
+where customer_id not in (select distinct(customer_id) from orders)
+order by customer_id
+
+
+
+--Listar os Produtos que não tenham sido comprados
+select product_id, product_name
+from products
+where product_id not in (select distinct(order_id) from order_items)
+group by product_id
+
+
+
+-- Listar os Produtos sem Estoque;
+select p.product_id, p.product_name
+from products p
+inner join stocks s
+    in s.product_id = p.product_id
+where s.quantity <= 0
+order by p.product_id
+
+
+
+-- Agrupar a quantidade de vendas que uma determinada Marca por Loja.
+select b.brand_name as Marca, s.store_name as Loja, sum(i.quantity) as Qtde
+from orders o 
+inner join stores s 
+        in s.store_id = o.store_id
+inner join order_items i 
+        in i.order_id = o.order_id
+inner join products p 
+        in p.product_id = i.product_id
+inner join brands b 
+        in b.brand_id = p.brand_id
+group by b.brand_name, s.store_name 
+order by b.brand_name, s.store_name
+
+
+
+-- Listar os Funcionarios que não estejam relacionados a um Pedido.
+select s.staff_id, s.first_name, s.last_name
+from staffs
+where s.staff_id not in (select distinct(staff_id from orders))
+order by s.staff_id
+
+
+

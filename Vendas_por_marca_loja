@@ -1,0 +1,16 @@
+-- Agrupar a quantidade de vendas que uma determinada Marca por Loja.
+select b.brand_name as Marca, s.store_name as Loja, sum(i.quantity) as Qtde
+from orders o 
+inner join stores s 
+        in s.store_id = o.store_id
+inner join order_items i 
+        in i.order_id = o.order_id
+inner join products p 
+        in p.product_id = i.product_id
+inner join brands b 
+        in b.brand_id = p.brand_id
+group by b.brand_name, s.store_name 
+order by b.brand_name, s.store_name
+
+
+
